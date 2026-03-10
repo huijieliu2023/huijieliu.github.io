@@ -25,10 +25,10 @@ const profile = {
   title: "Assistant Professor",
   subtitle: "Ph.D. · Master's Supervisor",
   affiliation: "Shenzhen University",
-  email: "your_email@university.edu.cn",
-  office: "Please add your office location",
+  email: "huijieliu@szu.edu.cn",
+  office: "Shenzhen University",
   intro:
-    "Huijie Liu is an Assistant Professor whose research centers on data mining and artificial intelligence, with particular interests in graph neural networks, knowledge relation modeling, visual understanding, and multimodal large models. Her recent work focuses on technological knowledge flow and combination modeling, graph representation learning, and AI methods for complex real-world data.",
+    "Huijie Liu is an Assistant Professor at Shenzhen University. Her research focuses on data mining and artificial intelligence, particularly graph neural networks, knowledge relation modeling, technological knowledge mining, and multimodal large models. Her work explores technological knowledge flow and combination modeling, graph representation learning, and AI methods for complex real-world data.",
 };
 
 const researchAreas = [
@@ -103,10 +103,10 @@ const stats = [
 ];
 
 const links = [
-  { label: "Google Scholar", value: "Add your link" },
-  { label: "DBLP", value: "Add your link" },
+  { label: "Google Scholar", value: "https://scholar.google.com/citations?user=_59cKfAAAAAJ&hl=zh-CN" },
   { label: "GitHub", value: "https://github.com/huijieliu2023" },
-  { label: "ORCID", value: "Add your link" },
+  { label: "DBLP", value: "Add your DBLP link" },
+  { label: "ORCID", value: "Add your ORCID link" },
 ];
 
 function SectionTitle({ icon: Icon, title, subtitle }: { icon: any; title: string; subtitle?: string }) {
@@ -127,11 +127,34 @@ function Pill({ text }: { text: string }) {
   return <span className="rounded-full bg-slate-100 px-3 py-1 text-sm text-slate-600">{text}</span>;
 }
 
+function TopNav() {
+  const items = ["About", "Research", "Publications", "Experience", "Service", "Contact"];
+  return (
+    <div className="sticky top-0 z-20 mb-8 rounded-2xl border border-slate-200 bg-white/85 px-4 py-3 shadow-sm backdrop-blur">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="text-sm font-semibold tracking-wide text-slate-900">Huijie Liu</div>
+        <div className="flex flex-wrap gap-2 text-sm text-slate-600">
+          {items.map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase()}`}
+              className="rounded-xl px-3 py-1.5 transition hover:bg-slate-100 hover:text-slate-900"
+            >
+              {item}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PersonalHomepage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-100 text-slate-800">
       <div className="mx-auto max-w-6xl px-6 py-10 lg:px-8">
-        <motion.header
+        <TopNav />
+        <motion.header id="about"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -154,8 +177,12 @@ export default function PersonalHomepage() {
               </div>
 
               <div className="mt-8 flex flex-wrap gap-3">
-                <Button className="rounded-2xl px-5">Publications</Button>
-                <Button variant="outline" className="rounded-2xl px-5">Open Positions</Button>
+                <a href="#publications">
+                  <Button className="rounded-2xl px-5">Publications</Button>
+                </a>
+                <a href="#contact">
+                  <Button variant="outline" className="rounded-2xl px-5">Open Positions</Button>
+                </a>
               </div>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
@@ -172,8 +199,12 @@ export default function PersonalHomepage() {
           <Card className="rounded-3xl border-0 shadow-lg">
             <CardContent className="flex h-full flex-col justify-between p-8">
               <div>
-                <div className="mx-auto mb-6 flex h-28 w-28 items-center justify-center rounded-full bg-slate-900 text-3xl font-semibold text-white">
-                  HL
+                <div className="mx-auto mb-6 h-36 w-36 overflow-hidden rounded-full ring-4 ring-slate-200">
+                  <img
+                    src="/profile.jpg"
+                    alt="Huijie Liu"
+                    className="h-full w-full object-cover"
+                  />
                 </div>
                 <div className="space-y-4 text-sm text-slate-600">
                   <div className="flex items-start gap-3">
@@ -208,7 +239,7 @@ export default function PersonalHomepage() {
 
         <main className="mt-10 grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-10">
-            <section>
+            <section id="research">
               <SectionTitle icon={BookOpen} title="Research Interests" subtitle="Main research themes" />
               <div className="grid gap-4 sm:grid-cols-2">
                 {researchAreas.map((area, idx) => {
@@ -235,7 +266,7 @@ export default function PersonalHomepage() {
               </div>
             </section>
 
-            <section>
+            <section id="publications">
               <SectionTitle icon={FileText} title="Selected Publications" subtitle="Representative research outputs" />
               <div className="space-y-4">
                 {selectedPublications.map((pub, idx) => (
@@ -260,7 +291,7 @@ export default function PersonalHomepage() {
               </div>
             </section>
 
-            <section>
+            <section id="experience">
               <SectionTitle icon={Briefcase} title="Academic & Industrial Collaboration" subtitle="Exchange and cooperation" />
               <Card className="rounded-3xl border-0 shadow-sm ring-1 ring-slate-200">
                 <CardContent className="p-6">
@@ -290,7 +321,7 @@ export default function PersonalHomepage() {
               </Card>
             </section>
 
-            <section>
+            <section id="service">
               <SectionTitle icon={Award} title="Academic Service" subtitle="Professional activities" />
               <Card className="rounded-3xl border-0 shadow-sm ring-1 ring-slate-200">
                 <CardContent className="p-6">
@@ -310,17 +341,31 @@ export default function PersonalHomepage() {
               <SectionTitle icon={ExternalLink} title="Links" subtitle="Profiles and external pages" />
               <Card className="rounded-3xl border-0 shadow-sm ring-1 ring-slate-200">
                 <CardContent className="p-6 space-y-3 text-sm text-slate-700">
-                  {links.map((link) => (
-                    <div key={link.label} className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-200">
-                      <span className="font-medium text-slate-900">{link.label}</span>
-                      <span className="truncate text-slate-500">{link.value}</span>
-                    </div>
-                  ))}
+                  {links.map((link) => {
+                    const isReady = link.value.startsWith("http");
+                    return (
+                      <div key={link.label} className="flex items-center justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-200">
+                        <span className="font-medium text-slate-900">{link.label}</span>
+                        {isReady ? (
+                          <a
+                            href={link.value}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="truncate text-slate-500 underline-offset-4 hover:text-slate-900 hover:underline"
+                          >
+                            {link.value}
+                          </a>
+                        ) : (
+                          <span className="truncate text-slate-500">{link.value}</span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </CardContent>
               </Card>
             </section>
 
-            <section>
+            <section id="contact">
               <SectionTitle icon={Mail} title="Contact" subtitle="Get in touch" />
               <Card className="rounded-3xl border-0 shadow-sm ring-1 ring-slate-200">
                 <CardContent className="p-6 space-y-3 text-sm text-slate-700">
@@ -335,7 +380,10 @@ export default function PersonalHomepage() {
         </main>
 
         <footer className="mt-12 border-t border-slate-200 pt-6 text-center text-sm text-slate-500">
-          © 2026 {profile.nameEn}. All rights reserved.
+          <div className="space-y-1">
+            <p>© 2026 {profile.nameEn}. All rights reserved.</p>
+            <p>Last updated: March 2026</p>
+          </div>
         </footer>
       </div>
     </div>
